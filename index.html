@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Return of Investrment on Real Estate</title>
+
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="./static/css/Style.css" />
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+
+  </head>
+
+  
+  <body onload="OnLoad()">
+
+    <!-- HEADER TOP-BAR -->
+    <header class="header-main">
+      <div class="header-logo">
+        <span class="header-logo-span">Canadian Real Estate - Return of Investrment</span>
+      </div>
+    </header>
+
+    <!-- Main Container-->
+    <div class="main-container" >
+        
+      <!-- RESULTS WINDOW-->
+      <div class="results-menu">
+            
+        <div class="results-parameters" id="results-parameters">
+
+            <!-- Purchase Details -->
+            <div class="Parameters-Container" id="Parameters_Filter">
+                <label class="Lable_class">Purchase Type</label>
+                <select class="form-select form-select" id="HomeType" onchange="PurchaseType_Change()">
+                  <option value="PreSaleDevelopment">Presale/New Development</option>
+                  <option value="Used Home" selected>Used Home</option>
+                </select><br>
+
+                
+                <label class="Lable_class">Purchase Details</label>
+                <table class="Parameter-Table table table-sm table-hover"id="PurchaseTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        <tr>
+                            <td>Purchase Date</td>
+                            <td align="right"> <input title="Purchase Date"  id="PurchaseDate"  type="date"  onfocus="this.oldValue = this.value;"  onchange="Calculate()"  value="2025-01-01" style="width: 7.5em; text-align: right;"/></td>
+                        </tr>
+                        <tr>
+                            <td>Purchase Price</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="PurchasePrice" type="number" step="1000" min="0" value="500000.00"  onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Downpayment</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="Downpayment" type="number" step="1000" min="0" value="100000" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Purchase Closing Cost</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="ClosingCost" type="number" step="100" min="0" value="5000" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td>Propert Transfer Tax </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="PropertyTransferTax" type="number" step="100" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>GST on New Home</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="5pGST_Cost" type="number" step="100" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mortgage Loan</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="MortgageLoan" type="number" step="100" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" width="100%">
+                                <input class="form-check-input Parameter-check-input " type="checkbox" id="5p_GST" onclick="Calculate()" checked /> 
+                                <label for="5p_GST">&nbsp Add GST to Mortgage Loan</label> 
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> <br>
+                <label class="Lable_class">Fix Rate Mortgage Details</label>
+                <table class="Parameter-Table table table-sm table-hover"id="MortgageTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        <tr>
+                            <td>Amortization</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">Year</span>
+                                    <input class="Currency_Input" id="AmortizationYears" type="number" step="1" min="0" value="25" onchange="Calculate()" >
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mortgage Interest Rate</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">%</span>
+                                    <input class="Currency_Input" id="MortgageInterestRate" type="number" step="0.01" min="0" value="4.5" onchange="Calculate()" >
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Payment</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="MonthlyPayment" type="number"  min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Operating Cost (Montly Expenses) -->
+            <div class="Parameters-Container_2" id="Parameters_Filter">
+                <label class="Lable_class">Operating Costs</label>
+                <table class="Parameter-Table table table-sm table-hover"id="Operating_CostTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        <tr>
+                            <td>Annual Home Insurance</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="Insurance" type="number" step="10" min="0" value="700" onchange="Calculate()">
+                                </div>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol_2">%</span>
+                                    <input class="Currency_Input_2" id="IncreaseInsurance" type="number" step="0.01" min="0" value="3.0" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Annual Property Tax</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="PropertyTax" type="number" step="10" min="0" value="1900" onchange="Calculate()">
+                                </div>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol_2">%</span>
+                                    <input class="Currency_Input_2" id="IncreasePropertyTax" type="number" step="0.01" min="0" value="3.0" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Strata Fee</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="StrataFee" type="number" step="10" min="0" value="380" onchange="Calculate()">
+                                </div>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol_2">%</span>
+                                    <input class="Currency_Input_2" id="IncreaseStrataFee" type="number" step="0.01" min="0" value="3.0" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Utility Fee</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="UtilityFee" type="number" step="10" min="0" value="0" onchange="Calculate()">
+                                </div>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol_2">%</span>
+                                    <input class="Currency_Input_2" id="IncreaseUtilityFee" type="number" step="0.01" min="0" value="3.0" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Annual Repair Fee</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="AnnualRepairFee" type="number" step="10" min="0" value="0" onchange="Calculate()">
+                                </div>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol_2">%</span>
+                                    <input class="Currency_Input_2" id="IncreaseRepairFee" type="number" step="0.01" min="0" value="3.0"onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Management Rate</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">%</span>
+                                    <input class="Currency_Input" id="PropertyMangRate" type="number" step="1" min="0" value="0" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Anual Vacancy Rate</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">%</span>
+                                    <input class="Currency_Input" id="VacancyRate" type="number" step="0.01" min="0" value="0"onchange="Calculate()" >
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <label class="Lable_class">Operating Income</label>
+                <table class="Parameter-Table table table-sm table-hover"id="Operating_IncomeTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        <tr>
+                            <td>Monthly Rental Income</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="MonthlyRent" type="number" step="10" min="0" value="2000" onchange="Calculate()">
+                                </div>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol_2">%</span>
+                                    <input class="Currency_Input_2" id="IncreaseRental" type="number" step="0.01" min="0" value="2.0" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Monthly Other Income</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="MonthlyOtherIncome" type="number" step="10" min="0" value="0" onchange="Calculate()">
+                                </div>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol_2">%</span>
+                                    <input class="Currency_Input_2" id="IncreaseOther" type="number" step="0.01" min="0" value="2.0" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <label class="Lable_class">Additional Info</label>
+                <table class="Parameter-Table table table-sm table-hover"id="SaleTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        <tr>
+                            <td>Sale Tax (GST) Rate</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">%</span>
+                                    <input class="Currency_Input" id="GST" type="number" step="0.01" min="0" value="5" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Income Tax Bracket</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">%</span>
+                                    <input class="Currency_Input" id="IncomeTaxBracket" type="number" step="1" min="0" value="30"  onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Saving Interest Rate</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">%</span>
+                                    <input class="Currency_Input" id="AverageInflation" type="number" step="0.1" min="0" value="2.50"  onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+
+            <!-- Summary -->
+            <div class="Parameters-Container-Summary" id="Parameters_Filter">
+                <label class="Lable_class">Sale Details</label>
+                <table class="Parameter-Table table table-sm table-hover" id="SaleTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        <tr>
+                            <td>Sale Date</td>
+                            <td align="right"> <input title="Sale Date"  id="SaleDate"  type="date"  onfocus="this.oldValue = this.value;"   onchange="Calculate()"  value="2030-01-01" style="width: 7.5em; text-align: right;"/></td>
+                        </tr>
+                        <tr>
+                            <td id="SalePrice_Text">Sale Price</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="SalePrice" type="number" step="1000" min="0" value="600000" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Sale Closing Cost</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="SaleClosingCost" type="number" step="10" min="0" value="5000" onchange="Calculate()">
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                <label class="Lable_class">Summary</label>
+                <table class="Parameter-Table table table-sm table-hover"id="SaleTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        <tr>
+                            <td>Return of Investment</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">%</span>
+                                    <input class="Currency_Input-ROI" id="ROI" type="number" step="1000" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Net Profit</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input-NetProfit" id="NetProfit" type="number" step="10" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td>Capital Gain Tax</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="CapitalGainTax" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <input class="Parameter-check-input form-check-input" type="checkbox" id="RealtorFee_Chk" onclick="Realtor_Chance()" checked />
+                                <label for="RealtorFee_Chk"> &nbsp Realtor Fee</label>
+                            </td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="RealtorFee" type="number" min="0" value="" step=10 onchange="Calculate()" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mortgage Balance</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="MortgageBalance" type="number" step="10" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Total Investment</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="InitialInvetment" type="number" step="10" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Investment Interest</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalInterestLoss" type="number" step="0.1" min="0" value="0"  onchange="Calculate()" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="Message-Box" id="Message"></span>
+            </div>
+
+            <!-- Total Expenses Upto Sale Date -->
+            <div class="Parameters-Container-Summary" id="Parameters_Filter">
+                <label class="Lable_class">Total Expenses by Sale Date</label>
+                <table class="Parameter-Table table table-sm table-hover"id="SaleSummaryTable">
+                    <tbody class="table-group-divider overflow-y-scroll table_Custom">
+                        
+                        
+                        <tr>
+                            <td>Mortgage Interest</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalMortgageInterest" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mortgage Principal</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalMortgagePrincipal" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Property Managment</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalPropoertyMang" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Strata Fee</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalStrataFee" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Insurance</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalInsurance" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Property Tax</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalPropertyTax" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Utility</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalUtility" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Repair & Fix</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalRepair" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Vacancy</td>
+                            <td align="right">
+                                <div class="dollar-input">
+                                    <span class="dollar-symbol">$</span>
+                                    <input class="Currency_Input" id="TotalVacancy" type="number" min="0" value="" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           
+        </div>
+        <div class="resizer-horizontal" id="resizer-horizontal-top"></div>
+        
+        <div class="results-graphs">
+            <div class="Outputs-Records">
+                <table class="Outputs-Records-Table" id="PaymentTable">
+                  <thead class="Outputs-Records-Table-thead">
+                    <tr>
+                      <th class="Outputs-Records-Table-body-th" scope="col"></th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Payment<br>Date
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Rental<br>Income
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Other<br>Income
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Mortgage<br>Interest
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Mortgage<br>Principal
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Lump Sum<br>Payment
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Management<br>Fee
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Strate<br>Fee
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Insurance
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Property<br>Tax
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Utility<br>Fee
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Repair<br>Fix
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Vacancy
+                      </th>
+                      <th class="Outputs-Records-Table-body-th" scope="col">
+                        Cash<br>Flow
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr></tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+      
+    </div>
+    </div>
+
+    <!-- Load all JavaScripts -->
+    <script type="text/javascript" src="./static/js/MyFunctions.js"> </script>
+  </body>
+
+</html>
