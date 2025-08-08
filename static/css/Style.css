@@ -1,0 +1,322 @@
+:root {
+    
+    --body-color: rgb(255, 255, 255);
+
+    --header-main-color: rgb(81, 81, 233);
+    --header-logo-font-size: 1.0rem;
+    --header-logo-font-color: white;
+    --header-height: 3rem;
+    --header-height-svg: 2rem;
+
+    --mainMenu-color: rgb(81, 81, 233);
+    --mainMenu-li-color: white;
+    --mainMenu-li-border-color: grey;
+    --mainMenu-li-hover-color: rgb(0, 255, 136);
+    --mainMenu-li-boxShadow-color: rgb(219, 217, 217);
+
+    --main-container-color: rgb(231, 146, 67);
+
+    --progressBar-color: rgb(206, 201, 201);
+
+    --parameters-color: rgb(223, 220, 220);
+    --parameters-border-color: rgba(0, 0, 0, 0.15);
+    --parameters-height: 43rem;
+    --parameters-constainr-height: 41rem;
+
+    --outputs-recordsTable-border-color-row: rgba(0, 0, 0, 0.15);
+    --outputs-recordsTable-row-color: rgb(234, 240, 233);
+    --outputs-recordsTable-row-color-hover: rgb(67, 223, 28);
+    --outputs-recordsTable-border-color-head: rgba(0, 0, 0, 0.35);
+    --outputs-recordsTable-header-color: rgba(115, 154, 190, 1.0);
+    
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    background-color: var(--body-color);
+
+    font-size: var(--header-logo-font-size);
+    font-family: 'Arial';
+
+    padding: 0rem;
+    margin: 0rem;
+    overflow: hidden;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+    padding: 0rem;
+    margin: 0rem;
+    overflow: hidden;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+.header-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    background-color: var(--header-main-color);
+    width: 100%;
+    height: var(--header-height);
+}
+
+.header-logo {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.header-logo-span {
+    height: 100%;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    padding-left: 1rem;
+    font-size: var(--header-logo-font-size);
+    font-weight: bold;
+    font-size: 1.5rem;;
+    text-align: left;
+    text-decoration: none;
+    color: var(--header-logo-font-color);
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+.main-container {
+    display: flex;
+    height: calc(100% - var(--header-height) );
+    width: 100%;
+}
+
+.results-menu {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.results-parameters {
+    flex: 0 0 var(--parameters-height); /* Initial height */
+    overflow-y: auto;
+}
+
+.resizer-horizontal {
+    height: 0.25rem;
+    background-color: #eb2222;
+    cursor: row-resize;
+    user-select: none;
+    cursor: s-resize;
+}
+
+.results-graphs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--parameters-color);
+    flex: 1;
+    overflow: auto;
+}
+
+.dollar-input {
+    position: relative;
+    width: 9rem;
+}
+.dollar-input_2 {
+    position: relative;
+    width: 100%;
+}
+.Currency_Input, .Currency_Input-NetProfit, .Currency_Input-ROI  {
+    padding-left: 1rem;
+    width: 100%;
+    height: 2rem;
+    text-align: right;
+    font-size: 1.2rem;
+}
+.Currency_Input_2 {
+    width: 5rem;
+    height: 2rem;
+    text-align: right;
+    font-size: 1.2rem;
+}
+.Currency_Input_3 {
+    width: 100%;
+    height: 2rem;
+    text-align: right;
+    font-size: 1.2rem;
+}
+.dollar-symbol {
+    position: absolute;
+    left: 0.4rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    text-align: right;
+}
+.Currency_Input-NetProfit {
+    font-weight: bolder;
+}
+.Currency_Input-ROI {
+    font-weight: bolder;
+}
+
+.dollar-symbol_2 {
+    position: absolute;
+    left: 4.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    text-align: right;
+}
+.dollar-symbol_3 {
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    text-align: right;
+}
+.Message-Box {
+    font-size: 1.2rem;
+    font-weight: bolder;
+}
+
+.table_Custom {
+    font-size: 1.2rem;
+}
+
+.Lable_class {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Parameters Container */
+
+.results-parameters {
+    display: flex;
+    flex-direction: row;
+
+    background-color: var(--parameters-color);
+
+    width: 100%;
+    height: 100%;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+}
+
+.Parameters-Container, .Parameters-Container_2, .Parameters-Container-Summary {
+    display: flex;
+    flex-direction: column;
+
+    margin: 0.25rem;
+    padding: 1rem 1rem 0 1rem;
+    width: 29rem;
+    min-width: 26rem;
+    height: var(--parameters-constainr-height);
+
+    border-color: var(--parameters-container-border-color);    
+    border-style: solid;
+    border-radius: 1rem;
+    border-width: 1px;
+
+    font-size: 0.8rem;
+
+    background-color: var(--parameters-container-color);
+}
+
+.Parameters-Container-Summary {
+    width: 25rem;
+    min-width: 25rem;
+}
+
+.Parameters-Container_2 {
+    width: 35rem;
+    min-width: 30rem;
+}
+
+
+.Parameter-Table {
+    border-style: hidden;
+}
+
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+
+.Outputs-Records {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 95%;
+    height: 95%;
+
+    border-radius: 1rem;
+    border-width: 1px;
+    border-style: solid;
+    border-color:var(--parameters-border-color);
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+
+    margin: 1rem;
+}
+
+.Outputs-Records-Table {
+    width: 100%;
+}
+
+.Outputs-Records-Table-thead {
+    text-align: left;
+    background-color: var(--outputs-recordsTable-header-color);
+    height: 5rem;
+    position: sticky;
+    top: 0;
+} 
+
+.Outputs-Records-Table-body-th {
+    text-align: right;
+    font-size: 1.1rem;
+    padding-right: 0.5rem;
+}
+
+.Outputs-Records-Table-body-tr:hover {
+    background-color: var(--outputs-recordsTable-row-color-hover);
+}
+.Outputs-Records-Table-body-tr_2:hover {
+    background-color: var(--outputs-recordsTable-row-color-hover);
+}
+
+.Outputs-Records-Table-body-tr_2 {
+    background-color: rgb(188, 192, 190);
+    align-items: right;
+}
+.Outputs-Records-Table-body-tr {
+    background-color: rgb(229, 235, 232);
+    align-items: right;
+}
+
+.Outputs-Records-Table-body-td {
+    align-items: right;
+    text-align: right;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 1.2rem;
+    border: 1px solid var(--outputs-recordsTable-border-color-row);
+}
+
